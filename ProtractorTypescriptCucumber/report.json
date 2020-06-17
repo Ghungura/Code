@@ -1,0 +1,110 @@
+[
+  {
+    "keyword": "Feature",
+    "name": "validate calculatoe functionality",
+    "line": 1,
+    "id": "validate-calculatoe-functionality",
+    "tags": [],
+    "uri": "Features\\calculator.feature",
+    "elements": [
+      {
+        "id": "validate-calculatoe-functionality;calculator-add-functionality",
+        "keyword": "Scenario",
+        "line": 3,
+        "name": "calculator add functionality",
+        "tags": [
+          {
+            "name": "@smoke",
+            "line": 2
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "Stepdefinition\\hook.ts:7"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "Stepdefinition\\hook.ts:11"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "I will navigate to \"Calc\" Site",
+            "match": {
+              "location": "Stepdefinition\\Steps.ts:9"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1107000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 5,
+            "name": "I add two numbers \"3\" and \"5\"",
+            "match": {
+              "location": "Stepdefinition\\Steps.ts:24"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 247000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 6,
+            "name": "the output displayed should be \"4\"",
+            "match": {
+              "location": "Stepdefinition\\Steps.ts:33"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2174000000
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "Stepdefinition\\hook.ts:30"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "node_modules\\protractor-cucumber-framework\\lib\\resultsCapturer.js:27"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 0
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
