@@ -1,0 +1,225 @@
+1. typescript= java script+additional stuff(oops capabilities)
+2. npm install -g typescript
+3. download visual studio code and import any cretaed folder
+4. till ES5(js version) let and const keywords are not present. But most of the applications are till ES5.. 
+   whatever we write in typescript , after compiling it gets converted to ES5 JS so that our browser or protractor can understand that one
+
+5. to compile tsc filename.ts--it will create a .js file
+6, to run node filename.js
+7. as javascript is asyncronous, var keyword will not work as expected. for eg. code to wait for something
+   in this case we should use let keyword. Let works in block level
+   let breaks the asynchronous concept
+  
+  for(var i=0;i<5;i++ )
+{
+
+    setTimeout(function() { console.log(i); }, 100 * i);
+}
+ o/p : 5 5 5 5 5   asynchronous
+
+for(leti=0;i<5;i++ )
+{
+
+    setTimeout(function() { console.log(i); }, 100 * i);
+}
+
+o/p: 0 1 2 3 4 synchronous
+
+8. var c=4
+   var c="hello"
+   
+   let a="hello"
+   let a=4 (it will not allow)
+  
+ define with the return type  let a:string="hello"  let b:number=4
+ array:  let list:Array<number>=[1,2,3];
+  let dynamic:any; any type it will accept
+  dynamic=3  dynamic="hello"
+let flag:boolean=false;
+
+9. if any variable is declared inside class, it is treated as properties. In that case let keyword is not used.
+    usename:string
+10. if the class is declared as export, then it will be accessbile to all the files present in the same project
+    whereever want to use that class, use import statement
+   export class classdemo//class that has to be accessible outside
+  import {classDemo} from './classDemo';//import {classname} from './filename'--in another file where classdemo class is accessed
+
+11. without creating class as well we can directly add and call the function
+    
+    import {classDemo} from './classDemo';
+    let cd=new classDemo(123);
+cd.setUsername("Rahul");
+console.log(cd.getUsername());
+console.log(cd.getSSN());
+function validate(value:number)
+{
+
+console.log(value);
+}
+validate(123);
+
+12. if a function returns anything add the return type
+
+   function validate(value:number):number
+{
+
+return value+1
+}
+ console.log(validate(2));
+
+13. in interface declaration if we put ? for the prperty name then it will be treated as an optional parameter.
+    export interface vehicle
+{
+color:string;
+engine:number;
+camera?:boolean;//optional, object may or may not have this parameter
+
+14. nameless functions are called anonymous function
+  
+
+15. Protractor can't understand typescript..so some changes has to be done to make it understand
+16. Install dependencies needed for protractor typescript
+    when we do npm install -g protractor  dependencies will be added to the systemglobally and no matter
+    where our project is located it will be accessible.
+    in case of framework development we may require n number of utilities. in that case installing all dependencies globally
+    is not suggestable.
+   in that case in the project folder create a file package.json and put all dependencies there
+    install it through npm install
+17. command to create package.json- traverse to the project path then type npm init
+18. adding dependencies to package.json: 
+    
+   after installing dependency we can find one folder node_modules under project level having all the dependencies and also in the
+    package.json propery:value will be added for that dependency
+    for eg: "dependencies": {
+    "protractor": "^7.0.0"
+  }
+  add protractor dependency: npm install protractor
+   
+to install more dependencies at a time add the name and version in the package.json and then hit npm install
+it will add all the dependencies as per that
+ to conver jasmine to type script jasmine below dependency to be added as jasmine can't understand typescript by default
+  "@types/jasmine": "2.5.41",
+    "@types/jasminewd2": "^2.0.0",
+19. to write the code create spec file with .ts extension
+    to make protractor js code work in typescript add import statement in the spec.ts file
+  import {browser, element, by, By, $, $$, ExpectedConditions} from 'protractor';
+
+20.For configuration file create configuration.ts file
+   add the statement 
+   import {Config} from 'protractor';
+
+  export let config: Config = {
+  ...
+}
+  configuration.js file syntax:
+exports.config = {--}
+
+no need to start selenium server everytime..we can add below things in configuration.ts file
+ directConnect:true
+21. protractor compiler is designed to run js files only
+   so once we have written protractor in typescript have to convert it back to js
+  we use protractor with typescript as it can have more oops principle which js itself only will not have,
+  but the converted jS from typescript will have all OOPs principle as well.
+    
+   to convert protractor ts to JS we need tsconfig.json file in our project
+  create typescript globally
+  npm install -g typescript
+ to install tscongig.json --traverse to project path and type tsc --init
+ got error in installing it, opened VS in administaror mode and command worked properly
+22. in the tsconfig.json file most important properties
+    "target": "es6", //es6 is the latest JS engine
+    "outDir": "./", or "outDir": "Jsfiles" /* Redirect output structure to the directory, that means after converted to JS where it should be stored */
+     "module": "commonjs",/* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
+   others can be referred from VS.
+
+  things that has to be excluded in converting to js should be added in tsconfig.json
+   "exclude": [
+    "node_modules",
+    "asyncAwait",
+    "plugins.ts"
+  ]
+23. to convert protractor ts to js traverese to project level and type tsc
+    in the configuration file make the spec file extenstion as .js, so that after converting and executing it will not give error
+    to execute traverese to the path mentioned in the tsconfig.json file outDir parameter:"outDir": "./", and type command
+    protractor configuration.js
+24. due to webdriver control flow protractor implement promises for each action.
+    if web driver control flow is removed protractor will act as asynchronous and it will not guarente which step will execute
+    first.
+
+  we can handle it in 2 ways
+    a) with chain promises- then() concept
+    b)by using async/await   From ES7 javascript has this concept, typescript has already this before
+25. To Use async/await , the function name for it block should be async
+    and we can add await to the actions for which we want it to wait
+
+describe('Chain locators demo',function() {  
+
+
+    it('Open Angular js website',async()=> {
+    browser.get('http://juliemr.github.io/protractor-demo/');
+    
+    //repeater ,  chain locators, And css for identical tags
+    
+    await element(by.model("first")).sendKeys("3");
+    await element(by.model("second")).sendKeys("5");
+    
+    await element(by.id("gobutton")).click();
+    
+    element(by.repeater("result in memory")).element(by.css("td:nth-child(3)")).getText().then(function(text)
+    {
+    
+    console.log(text);
+    })
+    
+    
+    // element(by.model("operator")).element(by.css("option:nth-child(4)")).click();
+    
+  
+    })
+    
+    })
+
+
+26. return type of web element in Typescript is ElementFinder
+27. Concept of running script from package.json:
+
+    in traditional way to execute script we first hit tsc command to compile
+   then type protractor outputdirectoryname/configuration.js- to execute script
+   
+ we can overcome this by adding few things in package.json file
+  in package.json there is tag called scripts
+  inside that add these parameters:
+
+"scripts": {
+    "test": "protractor JsFiles/configuration.js",
+    "pretest": "tsc",
+    "protractor":"./node_modules/protractor/built/cli.js",
+    "webdriver-update":"./node_modules/.bin/webdriver-manager update"
+  }
+ explanation: "test": "protractor JsFiles/configuration.js",--JSFiles is name of the folder where JS files are created
+               "pretest": "tsc",- to compile use tsc as a pretest command
+               "protractor":"./node_modules/protractor/built/cli.js" & "webdriver-update":"./node_modules/.bin/webdriver-manager"
+         
+ when we install protractor with command npm -g protractor it is installed globally. but package.json is project level
+it will not identify protractor. so we have to provide the protractor path (cli.js) which is present under node-modules folder inside the project
+
+when we do webdriver-manager update all selenium dependencies also installed globally. so we have to give path of this also which
+is present inside node-modules folder
+
+after all these are added we can execute scripts with the command npm run test
+
+for the first time before npm run test, hit command npm run webdriver-update
+  here webdriver-update is the property name mentioned under scripts tag in package.json
+
+
+
+
+
+
+
+
+
+
+
+
+
