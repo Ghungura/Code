@@ -1,0 +1,134 @@
+/**
+ * 
+ */
+
+//To print in consol
+console.log("Hello");
+
+//Javascript Datatype
+//JS is dynamic type language,no need to specify type of the variable while declaring
+//to declare variable use "var"
+
+var a=2;
+var b="hello";
+
+console.log(a);
+console.log(b);
+
+//condtional=if statement
+
+var c="o";
+var d=1;
+
+if(c=="one")
+	{
+	
+	console.log("matched");
+
+	}
+else
+	{console.log("not matched");}
+
+
+
+if(c=="one")
+{
+
+console.log("matched");
+
+}
+else if(d==1)
+{console.log("matched");}
+
+
+//conditional-for loop
+
+
+
+
+for(var i=0;i<10;i++)
+	{
+	console.log(i);
+	}
+
+//conditional--while 
+
+var j=10;
+console.log("while loop");
+while(j<5)
+	{
+	console.log("found");
+	j++
+	}
+
+//conditional- do while
+console.log("do while loop");
+do
+	{
+	console.log("found");
+	j++
+	
+	}while(j<5)
+		
+		
+		
+//Js Function and usage
+		
+function add(a,b)
+{
+		return a+b;}
+
+console.log(add(2,3));
+
+
+//JS arrays
+
+var a=["hi",1]
+for(var i=0;i<a.length;i++)
+	{
+	
+	console.log(a[i]);
+	}
+
+
+var c= new Array();
+
+c[0]= "goodbye";
+c[1]="4";
+c[2]="world";
+c[3]="hello";
+c[4]="bad";
+//length - 1 will be the maximum index
+console.log(c.length+ "is the size of the array called C");
+
+for(var i=0;i<c.length;i++)
+{
+	console.log(c[i]);
+	}
+	console.log("Print the array numbers in reverse");
+	for(var j=c.length-1;j>=0;j--)
+	{
+	console.log(c[j]);
+	}
+	
+//String Function
+	
+	var name ="Rahul"; // String literal declaration
+
+	console.log(name.charAt(3));
+
+	var newname=name.concat("Shetty");
+	console.log(newname);
+
+	console.log(name.indexOf("u"));
+
+	console.log(name.slice(1, 4));
+	//starting index is inclusive - ending index is exclusive
+
+	console.log(name.toUpperCase());
+
+	var name ="Rahul ";
+
+	console.log(name.trim());
+
+	var name2=new String("Rahul");  // string object declaration

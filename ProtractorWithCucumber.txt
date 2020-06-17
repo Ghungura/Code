@@ -1,0 +1,159 @@
+1. Cucumber is Behaviour Driven Framework
+2. Scenario
+   Given  (current state)
+   when   (Action)
+   then   (outcome)
+cucumber uses a language gherkin to describe the behaviour
+
+Scenario:TC description
+   Given
+   when
+   then   this all is trated as one TC.
+
+eg: scenario: verify user is logged in successfully
+    Given user is on home page
+    When user enters username and password and click on login btn
+    Then user is logged in successfully and dashboard page is displayed
+
+3. all cucumber TCs are placed in one file and that file is called as feature file
+4. Actual code we write in stepdefinition file
+   mapping for each Given,when,then to the steps written in stepdefinition file should be done
+5. Add cucumber related dependencies in package.json and hit command npm install
+  "protractor-cucumber-framework"
+   "cucumber"
+   "@types/cucumber"
+6. download cucumber Gherkin add on(extension) to support gherkin language in visual code
+7. Create a feature file with extension .feature and the TCs
+   for eg: Feature:validate calculatoe functionality
+
+           Scenario: calculator add functionality
+           Given navigate to calc site
+          When adding two numbers
+           Then result should be dispalyed
+
+
+8. to use cucumber we have to add different properties in configuration file
+     framework:'custom',
+    frameworkPath:require.resolve('protractor-cucumber-framework'),
+    specs: ['../Features/caculator.feature'],//spec should contain the feature file name
+     cucumberOpts:
+        {//require step definition file path
+        
+        require:['./Stepdefinition/*.js']//require should contain the path of step definition file and timeout.js file
+    
+    }
+ create both the step difinition file and timeout file in same folder so that i can be accessed using*.js
+
+timeout.ts file is used to put default wait before failing TCs
+var {setDefaultTimeout} = require('cucumber');
+
+setDefaultTimeout(60 * 1000);
+
+9. to execute from package.json add one more test with having path of this configuration file
+10. Scenariooutline in feature file is used to parametrize the TCs with multiple test datas
+     
+   Scenario Outline: calculator add functionality
+Given I will navigate to "Calc" Site
+When I add two numbers "<key1>" and "<key2>"
+Then the output displayed should be "<key3>"
+Examples:
+| key1 | key2 | key3 |
+| 2  | 3  | 5  |
+| 1  | 2  | 3  |
+
+it will execute 2 times with 2 sets of data as mentioned
+
+11. In Js we use jasmine to put assertion(expect.tobe())
+     in cucumber we use chai assertion
+  add below dependencenies in package.json
+  "chai":"^4.2.0",
+    "chai-as-promised":"^7.1.1"
+12. Tagging mechanisim to select TCs which has to be executed
+    in feature file before scenario add the tag for eg: @smoke
+    in configuration file add as:  tag:"@smoke"
+   then scenario with smoke tag only will be executed
+13. Cucumber hooks for pre and post requisite option(like before and after annotations in testng)
+   Hooks are used for setup and teardown the environment before and after each scenario. See the API reference for the specification of the first argument passed to hooks. Multiple Before hooks are executed in the order that they were defined. Multiple After hooks are executed in the reverse order that they were defined.
+var {After, Before} = require('cucumber');
+
+Before(function () {
+  // This hook will be executed before all scenarios
+});
+
+Before({tags: "@foo"}, function () {
+  // This hook will be executed before scenarios tagged with @foo
+});
+
+Before({tags: "@foo and @bar"}, function () {
+  // This hook will be executed before scenarios tagged with @foo and @bar
+});
+
+Before({tags: "@foo or @bar"}, function () {
+  // This hook will be executed before scenarios tagged with @foo or @bar
+});
+
+// You can use the following shorthand when only specifying tags
+Before("@foo", function () {
+  // This hook will be executed before scenarios tagged with @foo
+});
+
+create hook.ts file under stepdefinition folder and add above tags whichever required.
+
+14. Reporting:
+   mostly used: Cucumber-html-reporter
+   this report accepts a JSON format
+in package,json add "cucumber-html-reporter": "5.2.0" and do npm install
+   in configuration.ts file add this format:"json./report.json", //report.json is the file name
+   execute the project and this file will be created with json format
+    
+in configuration file add the Oncomplete tag and provide the input json file path and output html file path
+onComplete:()=>{
+      var options = {
+        theme: 'bootstrap',
+        jsonFile: './report.json',
+        output: './report.html',
+        reportSuiteAsScenarios: true,
+        scenarioTimestamp: true,
+        launchReport: true,
+        metadata: {
+            "App Version":"0.3.2",
+            "Test Environment": "STAGING",
+            "Browser": "Chrome  54.0.2840.98",
+            "Platform": "Windows 10",
+            "Parallel": "Scenarios",
+            "Executed": "Remote"
+        }
+    };
+ 
+    reporter.generate(options);
+    },
+
+
+   
+15. Screenshot on failure
+    add the code in after method of hook file
+
+    After(async function(scenario) {
+  // This hook will be executed after all scenarios
+  if(scenario.result.status===Status.FAILED)
+ 
+  {
+
+    //code to take screenshot
+   const sc= await browser.takeScreenshot();
+   this.attach(sc,"image/png");
+    //this.attach(sc,"image/png");
+  }
+
+});
+
+
+
+
+
+
+
+
+
+
+

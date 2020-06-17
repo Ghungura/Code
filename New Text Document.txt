@@ -1,0 +1,170 @@
+1. Download node js for windows
+
+Below are the mandatory commands for getting started
+
+npm install -g protractor
+
+webdriver-manager update
+
+webdriver-manager start
+
+2. Please download the software with name :  Eclipse IDE for JavaScript and Web Developers from below link
+
+https://www.eclipse.org/downloads/packages/release/oxygen/3a
+
+3. Webstrom provided by intellige to develop code.It is a javascript IDE.
+ but It is a paid tool. So we can go for above eclipse ide for java script and web developers
+
+4. protractor uses jasmine framework to develop TCs  to code TC
+5. Termionology:
+
+describe -Test Suite
+it - TestCase
+
+spec - Testfile (same as java class file)
+
+Every spec should have describe and it block
+
+configuration file - spec file name (same as TestNG xml file, which spec we want to execute can be triggered from here)
+right click on project=>create javascript file->Name as configuration.js
+
+6. Sample code:
+
+   /**
+ * 
+ */
+
+describe('Protractor baby steps',function() {  
+
+
+it('Open Angular js website',function() {
+
+
+
+
+
+//write your protractor raw code
+
+
+
+})
+
+ 
+
+
+//Each it block will be called as a spec
+
+
+
+it('close browswer', function() {
+
+
+
+// code to close browser
+})
+
+
+
+})
+
+Sample Configuration file:
+exports.config = {
+seleniumAddress : 'http://localhost:4444/wd/hub',
+
+    specs: ['spec1.js'],
+ 
+}
+ 
+4444--Port where the webdriver manager has started
+
+7. cli.js file path:
+
+   C:\Users\91890\AppData\Roaming\npm\node_modules\protractor\built\cli.js
+
+to run the TCs we have to configure protractor Test Runner
+ 
+write click on project-> run as configuration->in the left pannel search node js application
+
+in the configuration window select the project
+
+in the workplace we have to select cli.js file, that we can't select from external source like from local file system
+for that copy the  C:\Users\91890\AppData\Roaming\npm\node_modules\protractor folder in your project level in the eclipse. so that cli.js can be selected from projevt folder.
+
+
+each it block is treated as one spec in Jasmine framework
+
+8. Download Angular Js Plugin from Eclipse Market Place
+9. Right click on project->config->convert to tern project
+   with this we will get auto suggestion  whilecoding
+
+
+[31m    Failed: Angular could not be found on the page https://google.com/. If this is not an Angular application, 
+
+Failed: Angular could not be found on the page https://google.com/. If this is not an Angular application, you may need to turn off waiting for Angular.
+                              Please see 
+                              https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load[0m
+  Stack:
+    Error: Angular could not be found on the page https://google.com/. If this is not an Angular application, you may need to turn off waiting for Angular.
+                              Please see 
+                              https://github.com/angular/protractor/blob/master/docs/timeouts.md#waiting-for-angular-on-page-load
+        at C:\Users\91890\eclipse-workspace\ProtractorTutorial\protractor\built\browser.js:720:27
+
+10. Java script is asynchronus
+
+    suppose there are two stattement to invoke some URL and after that logging something in console.While executing 
+    logging statement is executing even before invoking the URL. In this case order of execution is not mentained.
+    This is one of asynchronus issue.
+
+11. Every Javascript steps returns promise
+    promise is the state of the step or the result of the step
+    Promise has 3 steps: Pending,Resplved,Rejected
+
+   In synchronus: you will move to next step only after promise for current step is either resplved/rejected
+
+   In asynchronus:move to next step even if promise is pending
+   90% of protractor API will not move to next step until the promise is resolved
+
+12. If performing action on browser Protractor API will take care of Promise (click(),sendkeys() etc..)
+
+    If want to retrive anything from browser then that particular functionality related methods have not support of prmise resolving
+    for eg. gettitle(),gettext(), console.log
+
+13. Protractor Global varibales:
+     protractor exports global varibales to your spec(test) file
+    
+     a) Browser: eg: browser.get()
+     b)element: helper function to find and interact with elements in DOM.It takes locator as an argument
+     c)By
+     d)protractor, protractor.key
+
+14.commonly used locators:
+   by.css, by.id,by,name,by.model,by.binding
+   All the locators supported by selenium are supported by protractor as well. It supports some other locators as well like model, binding etc.
+15.If in the DOM ng is mentioned it is an angular code
+
+16.Running in different browser
+   
+  chromedriver and gecko driver is installed automatically when we do "webdriver-manager update"  in the below path
+ 
+C:\Users\91890\AppData\Roaming\npm\node_modules\protractor\node_modules\webdriver-manager\selenium
+
+to download iedriver type "webdriver-manager update --ie"
+
+17.. Executing protractor on Non angular site
+    
+    add this step before invoking non angular site
+   browser.waitForAngularEnabled(fasle)
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
